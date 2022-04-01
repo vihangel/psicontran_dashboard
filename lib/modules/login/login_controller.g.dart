@@ -39,21 +39,6 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
-  final _$isSubmitedAtom = Atom(name: '_LoginControllerBase.isSubmited');
-
-  @override
-  bool get isSubmited {
-    _$isSubmitedAtom.reportRead();
-    return super.isSubmited;
-  }
-
-  @override
-  set isSubmited(bool value) {
-    _$isSubmitedAtom.reportWrite(value, super.isSubmited, () {
-      super.isSubmited = value;
-    });
-  }
-
   final _$isVisibleAtom = Atom(name: '_LoginControllerBase.isVisible');
 
   @override
@@ -88,22 +73,11 @@ mixin _$LoginController on _LoginControllerBase, Store {
       ActionController(name: '_LoginControllerBase');
 
   @override
-  String? validateUser() {
+  String? validateField(String? value) {
     final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
-        name: '_LoginControllerBase.validateUser');
+        name: '_LoginControllerBase.validateField');
     try {
-      return super.validateUser();
-    } finally {
-      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  String? validatePassword() {
-    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
-        name: '_LoginControllerBase.validatePassword');
-    try {
-      return super.validatePassword();
+      return super.validateField(value);
     } finally {
       _$_LoginControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -158,7 +132,6 @@ mixin _$LoginController on _LoginControllerBase, Store {
     return '''
 name: ${name},
 password: ${password},
-isSubmited: ${isSubmited},
 isVisible: ${isVisible}
     ''';
   }

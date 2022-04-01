@@ -7,6 +7,7 @@ import 'package:psicontran_dashboard/data/repository/user/user_repository.dart';
 
 import '../../services/users/users_service.dart';
 import '../../shared/constants.dart';
+import '../../shared/util.dart';
 
 part 'login_controller.g.dart';
 
@@ -19,16 +20,9 @@ abstract class _LoginControllerBase with Store {
   @observable
   String password = "";
 
-  @observable
-  bool isSubmited = false;
-
   @action
-  String? validateUser() =>
-      name == "" && isSubmited ? "O campo não pode ser vazio" : null;
-
-  @action
-  String? validatePassword() =>
-      password == "" && isSubmited ? "A senha não pode ser vazia" : null;
+  String? validateField(String? value) =>
+      value == "" ? "O campo não pode ser vazio" : null;
 
   @observable
   bool isVisible = false;
@@ -52,35 +46,35 @@ abstract class _LoginControllerBase with Store {
 
   @action
   Future<void> verify() async {
-    isSubmited = true;
     String response = "";
-    if (validatePassword() == null && validateUser() == null) {
-      final user = UserLoginModel(
-        name: name,
-        password: password,
-      );
-      // try {
-      //   response = await _userService.login(user).toString();
-      // } catch (e) {
-      //   print(e);
-      // }
-      // print(response.toString());
-      //Salvar cookies
-      //await UserRepository.saveUser([user]);
-      reset();
 
+    final user = UserLoginModel(
+      name: name,
+      password: password,
+    );
+    try {
+      print(user.toJson());
+      print('{ "name": "angel","password": "1234"}');
+      response =
+          await _userService.login('{ "name": "angel","password": "1234"}');
+      print(response.toString());
       Modular.to.navigate("/home");
+    } on DioError catch (e) {
+      print(e.response?.toString());
+
+      print("Erro " +
+          (e.response?.statusCode).toString() +
+          " - " +
+          (e.response?.statusMessage).toString());
+      //Salvar cookies
     }
+    //reset();
   }
 
   @action
   Future<void> passwordRecovery() async {
-    isSubmited = true;
-
-    if (validateUser() == null) {
-      Modular.to.pop();
-      reset();
-    }
+    Modular.to.pop();
+    reset();
   }
 
   @action
@@ -88,6 +82,5 @@ abstract class _LoginControllerBase with Store {
     name = "";
     password = "";
     isVisible = false;
-    isSubmited = false;
   }
 }
