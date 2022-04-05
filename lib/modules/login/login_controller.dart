@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:localstorage/localstorage.dart';
 
 import 'package:mobx/mobx.dart';
 import 'package:psicontran_dashboard/data/models/user/user_model.dart';
 import 'package:psicontran_dashboard/data/repository/user/user_repository.dart';
 
+import '../../data/models/user/response_login/response_login_model.dart';
 import '../../services/users/users_service.dart';
 import '../../shared/constants.dart';
 import '../../shared/util.dart';
@@ -46,19 +48,17 @@ abstract class _LoginControllerBase with Store {
 
   @action
   Future<void> verify() async {
-    String response = "";
-
+    final String response;
+    final LocalStorage storage = new LocalStorage('login_model');
     final user = UserLoginModel(
       name: name,
       password: password,
     );
     try {
-      print(user.toJson());
-      print('{ "name": "angel","password": "1234"}');
-      response =
-          await _userService.login('{ "name": "angel","password": "1234"}');
-      print(response.toString());
+      response = await _userService.login(user);
+      // storage.setItem('login_model', response);
       Modular.to.navigate("/home");
+      reset();
     } on DioError catch (e) {
       print(e.response?.toString());
 
@@ -66,9 +66,7 @@ abstract class _LoginControllerBase with Store {
           (e.response?.statusCode).toString() +
           " - " +
           (e.response?.statusMessage).toString());
-      //Salvar cookies
     }
-    //reset();
   }
 
   @action

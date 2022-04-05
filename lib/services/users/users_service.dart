@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:dio/dio.dart';
 
 import 'package:psicontran_dashboard/shared/constants.dart';
@@ -18,5 +20,5 @@ abstract class UserService {
   //     @Path() String query, @Path() int page);
 
   @POST('/login')
-  Future<String> login(@Path() String user);
+  Future<String> login(@Body() UserLoginModel user);
 }

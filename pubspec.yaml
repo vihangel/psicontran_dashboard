@@ -56,7 +56,7 @@ dependencies:
   flutter_svg: ^0.22.0
   retrofit_generator: ^2.0.0-beta1
   path_provider: ^2.0.1 
-
+  localstorage: 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
