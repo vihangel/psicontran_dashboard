@@ -20,5 +20,10 @@ abstract class UserService {
   //     @Path() String query, @Path() int page);
 
   @POST('/login')
-  Future<String> login(@Body() UserLoginModel user);
+  Future<ResponseUserLoginModel> login(@Body() UserLoginModel user);
+
+  @GET('/user')
+  Future<String> listUsers(
+    @Header("Authorization") String token,
+  );
 }

@@ -12,13 +12,13 @@ mixin _$HomeController on _HomeControllerBase, Store {
   final _$userAtom = Atom(name: '_HomeControllerBase.user');
 
   @override
-  List<UserLoginModel> get user {
+  List<LocalStorageModel> get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(List<UserLoginModel> value) {
+  set user(List<LocalStorageModel> value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
@@ -69,6 +69,21 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$initializeAsyncAction = AsyncAction('_HomeControllerBase.initialize');
+
+  @override
+  Future<void> initialize() {
+    return _$initializeAsyncAction.run(() => super.initialize());
+  }
+
+  final _$getUserLoginAsyncAction =
+      AsyncAction('_HomeControllerBase.getUserLogin');
+
+  @override
+  Future<void> getUserLogin() {
+    return _$getUserLoginAsyncAction.run(() => super.getUserLogin());
+  }
+
   final _$getUserAsyncAction = AsyncAction('_HomeControllerBase.getUser');
 
   @override
@@ -92,17 +107,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
         name: '_HomeControllerBase.onItemTapped');
     try {
       return super.onItemTapped(index);
-    } finally {
-      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void initialize() {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.initialize');
-    try {
-      return super.initialize();
     } finally {
       _$_HomeControllerBaseActionController.endAction(_$actionInfo);
     }

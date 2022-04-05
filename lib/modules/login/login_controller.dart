@@ -48,15 +48,17 @@ abstract class _LoginControllerBase with Store {
 
   @action
   Future<void> verify() async {
-    final String response;
-    final LocalStorage storage = new LocalStorage('login_model');
+    final ResponseUserLoginModel response;
+    final LocalStorage storage = new LocalStorage('local_storage');
     final user = UserLoginModel(
       name: name,
       password: password,
     );
     try {
       response = await _userService.login(user);
-      // storage.setItem('login_model', response);
+      storage.setItem('token', response.token);
+      storage.setItem('name', response.user!.name);
+      storage.setItem('email', response.user!.email);
       Modular.to.navigate("/home");
       reset();
     } on DioError catch (e) {

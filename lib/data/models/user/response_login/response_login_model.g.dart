@@ -9,9 +9,10 @@ part of 'response_login_model.dart';
 ResponseUserLoginModel _$ResponseUserLoginModelFromJson(
     Map<String, dynamic> json) {
   return ResponseUserLoginModel(
-    name: json['name'] as String,
-    password: json['password'] as String,
-    error: json['error'] as String,
+    user: json['user'] == null
+        ? null
+        : LocalUser.fromJson(json['user'] as Map<String, dynamic>),
+    error: json['error'] as String?,
     token: json['token'] as String?,
   );
 }
@@ -19,8 +20,7 @@ ResponseUserLoginModel _$ResponseUserLoginModelFromJson(
 Map<String, dynamic> _$ResponseUserLoginModelToJson(
         ResponseUserLoginModel instance) =>
     <String, dynamic>{
-      'name': instance.name,
-      'password': instance.password,
+      'user': instance.user,
       'error': instance.error,
       'token': instance.token,
     };

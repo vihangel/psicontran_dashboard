@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:psicontran_dashboard/shared/resources/colors.dart';
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.getUser();
+    controller.initialize();
 
     return Observer(builder: (context) {
       final size = MediaQuery.of(context).size;
@@ -49,7 +50,7 @@ class HomePage extends StatelessWidget {
             // ],
           ),
           body: Observer(builder: (context) {
-            return Text("Body");
+            return Text("aa");
             // return widget.elementAt(controller.selectedIndex);
           }),
           drawer: Drawer(
