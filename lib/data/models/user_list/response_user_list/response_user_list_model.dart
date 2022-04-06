@@ -6,7 +6,7 @@ part 'response_user_list_model.g.dart';
 
 @JsonSerializable()
 class ResponseUserListModel {
-  final String? error;
+  final bool? error;
 
   final List<UserListModel>? users;
 

@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:dio/dio.dart';
+import 'package:psicontran_dashboard/data/models/user_list/response_user_list/response_user_list_model.dart';
 
 import 'package:psicontran_dashboard/shared/constants.dart';
 
@@ -23,7 +24,7 @@ abstract class UserService {
   Future<ResponseUserLoginModel> login(@Body() UserLoginModel user);
 
   @GET('/user')
-  Future<String> listUsers(
+  Future<ResponseUserListModel> listUsers(
     @Header("Authorization") String token,
   );
 }

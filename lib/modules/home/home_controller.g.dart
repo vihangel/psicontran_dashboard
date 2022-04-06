@@ -24,6 +24,21 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$usersListAtom = Atom(name: '_HomeControllerBase.usersList');
+
+  @override
+  List<UserListModel> get usersList {
+    _$usersListAtom.reportRead();
+    return super.usersList;
+  }
+
+  @override
+  set usersList(List<UserListModel> value) {
+    _$usersListAtom.reportWrite(value, super.usersList, () {
+      super.usersList = value;
+    });
+  }
+
   final _$imageAtom = Atom(name: '_HomeControllerBase.image');
 
   @override
@@ -51,6 +66,21 @@ mixin _$HomeController on _HomeControllerBase, Store {
   set selectedIndex(int value) {
     _$selectedIndexAtom.reportWrite(value, super.selectedIndex, () {
       super.selectedIndex = value;
+    });
+  }
+
+  final _$isLoadedAtom = Atom(name: '_HomeControllerBase.isLoaded');
+
+  @override
+  bool get isLoaded {
+    _$isLoadedAtom.reportRead();
+    return super.isLoaded;
+  }
+
+  @override
+  set isLoaded(bool value) {
+    _$isLoadedAtom.reportWrite(value, super.isLoaded, () {
+      super.isLoaded = value;
     });
   }
 
@@ -116,8 +146,10 @@ mixin _$HomeController on _HomeControllerBase, Store {
   String toString() {
     return '''
 user: ${user},
+usersList: ${usersList},
 image: ${image},
 selectedIndex: ${selectedIndex},
+isLoaded: ${isLoaded},
 imgPerfil: ${imgPerfil}
     ''';
   }

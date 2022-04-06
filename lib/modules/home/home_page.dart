@@ -32,7 +32,11 @@ class HomePage extends StatelessWidget {
 
     return Observer(builder: (context) {
       final size = MediaQuery.of(context).size;
-
+      if (!controller.isLoaded) {
+        return const Center(
+          child: const CircularProgressIndicator(),
+        );
+      }
       return SafeArea(
         child: Scaffold(
           backgroundColor: ColorsApp.white,
@@ -50,8 +54,104 @@ class HomePage extends StatelessWidget {
             // ],
           ),
           body: Observer(builder: (context) {
-            return Text("aa");
-            // return widget.elementAt(controller.selectedIndex);
+            return FittedBox(
+              child: Container(
+                width: 400,
+                height: 670,
+                child: Column(
+                  children: [
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: const [
+                    //     Flexible(
+                    //       fit: FlexFit.loose,
+                    //       flex: 1,
+                    //       child: Icon(Icons.edit),
+                    //     ),
+                    //     Flexible(
+                    //       fit: FlexFit.loose,
+                    //       flex: 3,
+                    //       child: Text("Nome"),
+                    //     ),
+                    //     Flexible(
+                    //       fit: FlexFit.loose,
+                    //       flex: 2,
+                    //       child: Text("CPF"),
+                    //     ),
+                    //     Flexible(
+                    //       fit: FlexFit.loose,
+                    //       flex: 3,
+                    //       child: Text("Autoescola"),
+                    //     ),
+                    //     Flexible(
+                    //       fit: FlexFit.loose,
+                    //       flex: 1,
+                    //       child: Text("Pago"),
+                    //     ),
+                    //     Flexible(
+                    //       fit: FlexFit.loose,
+                    //       flex: 1,
+                    //       child: Text("Situação"),
+                    //     ),
+                    //   ],
+                    // ),
+                    // Divider(
+                    //   height: 2,
+                    //   thickness: 1,
+                    //   color: ColorsApp.primary,
+                    // ),
+                    ListView.builder(
+                      itemCount: controller.usersList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Flexible(
+                              fit: FlexFit.loose,
+                              flex: 1,
+                              child: Icon(Icons.edit),
+                            ),
+                            Flexible(
+                              fit: FlexFit.loose,
+                              flex: 3,
+                              child: Text(
+                                  controller.usersList[index].name.toString()),
+                            ),
+                            Flexible(
+                              fit: FlexFit.loose,
+                              flex: 2,
+                              child: Text(
+                                  controller.usersList[index].cpf.toString()),
+                            ),
+                            Flexible(
+                              fit: FlexFit.loose,
+                              flex: 3,
+                              child: Text(controller.usersList[index].autoescola
+                                  .toString()),
+                            ),
+                            Flexible(
+                              fit: FlexFit.loose,
+                              flex: 1,
+                              child:
+                                  controller.usersList[index].taxa == "fechada"
+                                      ? const Icon(Icons.check)
+                                      : const Icon(Icons.close),
+                              // : Icon(Icons.cancel),
+                            ),
+                            const Flexible(
+                              fit: FlexFit.loose,
+                              flex: 1,
+                              child: Icon(Icons.play_arrow_rounded,
+                                  color: Colors.green),
+                            ),
+                          ],
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
+            );
           }),
           drawer: Drawer(
             backgroundColor: ColorsApp.white,

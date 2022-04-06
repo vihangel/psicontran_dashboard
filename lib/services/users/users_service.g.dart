@@ -32,18 +32,19 @@ class _UserService implements UserService {
   }
 
   @override
-  Future<String> listUsers(token) async {
+  Future<ResponseUserListModel> listUsers(token) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
-            method: 'GET',
-            headers: <String, dynamic>{r'Authorization': token},
-            extra: _extra)
-        .compose(_dio.options, '/user',
-            queryParameters: queryParameters, data: _data)
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseUserListModel>(Options(
+                method: 'GET',
+                headers: <String, dynamic>{r'Authorization': token},
+                extra: _extra)
+            .compose(_dio.options, '/user',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseUserListModel.fromJson(_result.data!);
     return value;
   }
 
